@@ -1,5 +1,5 @@
 # awesome-bricks
-build anything the limit is imagination
+Build anything the limit is imagination
 
 in development coming soon 
 
