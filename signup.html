@@ -1,1 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Sign Up</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-box {
+    width: 360px;
+    padding: 30px;
+    background: #222;
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+
+    background: #111;
+    color: white;
+
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+
+    background: white;
+    color: black;
+
+    border: none;
+    border-radius: 5px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ddd;
+}
+
+#message {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.error {
+    color: #ff5555;
+}
+
+.success {
+    color: #55ff77;
+}
+
+.info {
+    margin-top: 15px;
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="signup-box">
+
+<h1>Sign Up</h1>
+
+<form id="signupForm">
+
+<label for="username">Username</label>
+
+<input
+    id="username"
+    type="text"
+    minlength="3"
+    maxlength="20"
+    placeholder="Username"
+    required
+>
+
+<label for="email">Email (optional)</label>
+
+<input
+    id="email"
+    type="email"
+    placeholder="Email"
+>
+
+<label for="password">Password</label>
+
+<input
+    id="password"
+    type="password"
+    minlength="8"
+    placeholder="Password"
+    required
+>
+
+<label for="invite">Invite Key</label>
+
+<input
+    id="invite"
+    type="text"
+    placeholder="Invite Key"
+    required
+>
+
+<button type="submit">
+Create Account
+</button>
+
+</form>
+
+<div id="message"></div>
+
+<div class="info">
+Username: 3–20 characters<br>
+Only letters, numbers and _
+</div>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   100 TEST KEYS
+   APAGUE ESTA PARTE QUANDO TERMINAR OS TESTES
+================================================== */
+
+const TEST_KEYS = [
+
+"A7K9M2Q4",
+"B3X8P6L1",
+"C9R4T7N2",
+"D5W1K8V6",
+"E2M7Q9X3",
+"F8L4P1R6",
+"G6N2Y9K5",
+"H1V7C3M8",
+"J4Q8W2L9",
+"K9P5X1N7",
+
+"L3M8R6T2",
+"M7K2V9Q4",
+"N5X1P8C6",
+"P2R7L4W9",
+"Q8T3M6K1",
+"R4V9N2X7",
+"S6P1Q8L3",
+"T9K4W7M2",
+"U3X6R1V8",
+"V7N2C9P5",
+
+"W1M8K3Q6",
+"X5R9L2T7",
+"Y2P6V8N4",
+"Z8Q3K5M1",
+"A4N7X2R9",
+"B9L1P6V3",
+"C5M8Q2K7",
+"D2R9W4N6",
+"E7V3L8P1",
+"F1K6X9Q4",
+
+"G8P2M5R7",
+"H4N9V1L6",
+"J7Q3X8K2",
+"K2W6P9M4",
+"L9R1N5V8",
+"M4X7Q2C9",
+"N8K3L6P1",
+"P5V9R4W2",
+"Q1M7X5K8",
+"R6N2P9L3",
+
+"S3K8V1Q7",
+"T7P4M9X2",
+"U2L6R8N5",
+"V9Q1K4W7",
+"W5M3P8X6",
+"X8N6L2R4",
+"Y4K9Q7M1",
+"Z1P5V3N8",
+"A6R2X9L4",
+"B8M7K1Q5",
+
+"C3V9P6R2",
+"D9L4N8X1",
+"E5Q2M7K9",
+"F7R1V6P3",
+"G2X8L5N9",
+"H9M3Q6K1",
+"J1P7R4V8",
+"K6N9X2L5",
+"L8Q4M1P7",
+"M3V5K9R2",
+
+"N7X1L6Q8",
+"P9R3M5V1",
+"Q4K8N2X6",
+"R2P7L9M4",
+"S8V1Q5K3",
+"T4X9R2N7",
+"U6M3P8L1",
+"V1K7Q4X9",
+"W9N5R3M6",
+"X2L8P1V7",
+
+"Y7Q3K9N4",
+"Z5M2R8X1",
+"A9P4V6L2",
+"B1K8Q5M7",
+"C7N3X9R4",
+"D4P6L1V8",
+"E8M5K2Q9",
+"F3R7N4X6",
+"G9V2P8L5",
+"H6Q1M7K3",
+
+"J8L2V5R9",
+"K4N7X1P6",
+"L1Q9M3V8",
+"M6R2K8X5",
+"N9P4L7Q1",
+"P7V3M9K2",
+"Q2X6R1N8",
+"R8K5P3L9",
+"S1M7V4Q6",
+"T5N2X8R3"
+
+];
+
+
+/* ==================================================
+   SIGNUP
+================================================== */
+
+const form = document.getElementById("signupForm");
+
+const message = document.getElementById("message");
+
+
+form.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const invite =
+        document.getElementById("invite").value.trim();
+
+
+    /* USERNAME */
+
+    if (!/^[A-Za-z0-9_]{3,20}$/.test(username)) {
+
+        message.textContent =
+            "Username must be 3-20 characters and only use letters, numbers and _.";
+
+        message.className = "error";
+
+        return;
+    }
+
+
+    /* PASSWORD */
+
+    if (password.length < 8) {
+
+        message.textContent =
+            "Password must contain at least 8 characters.";
+
+        message.className = "error";
+
+        return;
+    }
+
+
+    /* USED KEYS */
+
+    let usedKeys = JSON.parse(
+        localStorage.getItem("usedInviteKeys") || "[]"
+    );
+
+
+    /* ALL KEYS USED */
+
+    if (usedKeys.length >= TEST_KEYS.length) {
+
+        message.textContent =
+            "All the keys are used.";
+
+        message.className = "error";
+
+        return;
+    }
+
+
+    /* INVALID KEY */
+
+    if (!TEST_KEYS.includes(invite)) {
+
+        message.textContent =
+            "Invalid invite key.";
+
+        message.className = "error";
+
+        return;
+    }
+
+
+    /* KEY ALREADY USED */
+
+    if (usedKeys.includes(invite)) {
+
+        message.textContent =
+            "This invite key has already been used.";
+
+        message.className = "error";
+
+        return;
+    }
+
+
+    /* ACCOUNTS */
+
+    let accounts = JSON.parse(
+        localStorage.getItem("accounts") || "[]"
+    );
+
+
+    /* USERNAME EXISTS */
+
+    if (
+        accounts.some(
+            account =>
+                account.username.toLowerCase()
+                === username.toLowerCase()
+        )
+    ) {
+
+        message.textContent =
+            "This username is already taken.";
+
+        message.className = "error";
+
+        return;
+    }
+
+
+    /* CREATE ACCOUNT */
+
+    accounts.push({
+        username: username,
+        email: email,
+        password: password
+    });
+
+
+    localStorage.setItem(
+        "accounts",
+        JSON.stringify(accounts)
+    );
+
+
+    /* MARK KEY USED */
+
+    usedKeys.push(invite);
+
+    localStorage.setItem(
+        "usedInviteKeys",
+        JSON.stringify(usedKeys)
+    );
+
+
+    message.textContent =
+        "Account created successfully!";
+
+    message.className = "success";
+
+    form.reset();
+
+
+    /* LAST KEY */
+
+    if (usedKeys.length >= TEST_KEYS.length) {
+
+        message.textContent =
+            "All the keys are used.";
+
+        message.className = "error";
+    }
+
+});
+
+</script>
+
+</body>
+</html>
