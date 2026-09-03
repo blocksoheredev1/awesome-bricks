@@ -8,8 +8,3 @@ in development coming soon
 </a>
 
 
-<!-- Link para o arquivo signup.html na sua branch -->
-<p>
-    <a href="https://github.com">signup</a>
-</p>
-
