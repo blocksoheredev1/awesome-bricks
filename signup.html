@@ -1,0 +1,396 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login System</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: #e00000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .box {
+        width: 360px;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 0;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        font-size: 15px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 18px;
+        border: 0;
+        border-radius: 4px;
+        background: #111;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #333;
+    }
+
+    .switch {
+        background: white;
+        color: #111;
+        border: 1px solid #111;
+        margin-top: 10px;
+    }
+
+    .message {
+        text-align: center;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .small {
+        font-size: 12px;
+        color: #555;
+        margin-top: 5px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <!-- LOGIN -->
+    <div id="login">
+        <h1>Login</h1>
+
+        <label>Username</label>
+        <input id="loginUsername" type="text" maxlength="20">
+
+        <label>Password</label>
+        <input id="loginPassword" type="password">
+
+        <button onclick="login()">Login</button>
+
+        <button class="switch" onclick="showSignup()">
+            Create account
+        </button>
+
+        <div id="loginMessage" class="message"></div>
+    </div>
+
+
+    <!-- SIGNUP -->
+    <div id="signup" class="hidden">
+        <h1>Sign Up</h1>
+
+        <label>Username</label>
+        <input id="signupUsername" type="text" maxlength="20">
+
+        <div class="small">
+            3-20 characters: letters, numbers and _
+        </div>
+
+        <label>Password</label>
+        <input id="signupPassword" type="password">
+
+        <div class="small">
+            Minimum 8 characters
+        </div>
+
+        <label>Invite Key</label>
+        <input id="inviteKey" type="text">
+
+        <button onclick="signup()">Create Account</button>
+
+        <button class="switch" onclick="showLogin()">
+            Back to Login
+        </button>
+
+        <div id="signupMessage" class="message"></div>
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   INVITE KEYS
+   ===================================================== */
+
+const inviteKeys = [
+    "BRICK-7K2M-X9Q4",
+    "BRICK-P4N8-W3T6",
+    "BRICK-H7V2-K5R9",
+    "BRICK-Q8L4-M2Z7",
+    "BRICK-X5C9-T7P3",
+    "BRICK-N2F6-Y8K4",
+    "BRICK-R9W3-B6H2",
+    "BRICK-M7Q5-V2L8",
+    "BRICK-T4K9-C7N2",
+    "BRICK-Z6P3-H8M5",
+    "BRICK-K2R7-X4V9",
+    "BRICK-Y5N8-Q3L6",
+    "BRICK-V8M2-T6K4",
+    "BRICK-C4H7-P9W3",
+    "BRICK-L6X2-R8N5",
+    "BRICK-W3T9-K7M4",
+    "BRICK-F8Q5-Y2C6",
+    "BRICK-P7V4-H3L9",
+    "BRICK-N9K2-W6R5",
+    "BRICK-B5M8-X3T7",
+    "BRICK-Q2L6-K9V4",
+    "BRICK-H4R8-P7N3",
+    "BRICK-X9T5-C2M6",
+    "BRICK-M3W7-Y8K2",
+    "BRICK-V6N4-Q5R9",
+    "BRICK-K8P2-L7H5",
+    "BRICK-T9C4-X6M3",
+    "BRICK-R5Y8-W2N7",
+    "BRICK-F3K9-V4Q6",
+    "BRICK-Z7M5-H2T8",
+    "BRICK-N4X8-P6R2",
+    "BRICK-W9L3-K5C7",
+    "BRICK-Q6V2-M8Y4",
+    "BRICK-H5T7-R3N9",
+    "BRICK-X2K6-P8W4",
+    "BRICK-M9C5-V7L2",
+    "BRICK-Y3R8-Q4N6",
+    "BRICK-V5H2-T9K7",
+    "BRICK-C8P4-X3M6",
+    "BRICK-L2W7-R9Y5",
+    "BRICK-K4N8-Q6T3",
+    "BRICK-T7M2-H5V9",
+    "BRICK-R8X4-P3L6",
+    "BRICK-F6Y9-W2K5",
+    "BRICK-Z3C7-M8N4",
+    "BRICK-N7Q5-X2R8",
+    "BRICK-W4H9-K6P3",
+    "BRICK-Q9L2-V5T7",
+    "BRICK-H8M4-R6C2",
+    "BRICK-X5P7-Y3N9"
+];
+
+
+/* =====================================================
+   PÁGINAS
+   ===================================================== */
+
+function showSignup() {
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("signup").classList.remove("hidden");
+    clearMessages();
+}
+
+function showLogin() {
+    document.getElementById("signup").classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
+    clearMessages();
+}
+
+function clearMessages() {
+    document.getElementById("loginMessage").textContent = "";
+    document.getElementById("signupMessage").textContent = "";
+}
+
+
+/* =====================================================
+   SIGNUP
+   ===================================================== */
+
+function signup() {
+
+    const username =
+        document.getElementById("signupUsername").value.trim();
+
+    const password =
+        document.getElementById("signupPassword").value;
+
+    const key =
+        document.getElementById("inviteKey").value.trim().toUpperCase();
+
+    const message =
+        document.getElementById("signupMessage");
+
+
+    /* Username */
+
+    const usernameRegex = /^[A-Za-z0-9_]{3,20}$/;
+
+    if (!usernameRegex.test(username)) {
+        message.textContent =
+            "Invalid username.";
+
+        return;
+    }
+
+
+    /* Password */
+
+    if (password.length < 8) {
+        message.textContent =
+            "Password must have at least 8 characters.";
+
+        return;
+    }
+
+
+    /* Invite key */
+
+    if (!inviteKeys.includes(key)) {
+        message.textContent =
+            "Invalid invite key.";
+
+        return;
+    }
+
+
+    /* Verifica se a key já foi usada */
+
+    const usedKeys =
+        JSON.parse(localStorage.getItem("usedInviteKeys") || "[]");
+
+    if (usedKeys.includes(key)) {
+        message.textContent =
+            "This invite key has already been used.";
+
+        return;
+    }
+
+
+    /* Verifica username existente */
+
+    const users =
+        JSON.parse(localStorage.getItem("users") || "[]");
+
+    const usernameExists =
+        users.some(user =>
+            user.username.toLowerCase() === username.toLowerCase()
+        );
+
+    if (usernameExists) {
+        message.textContent =
+            "Username already exists.";
+
+        return;
+    }
+
+
+    /* Cria conta */
+
+    users.push({
+        username: username,
+        password: password
+    });
+
+    localStorage.setItem(
+        "users",
+        JSON.stringify(users)
+    );
+
+
+    /* Marca invite key como usada */
+
+    usedKeys.push(key);
+
+    localStorage.setItem(
+        "usedInviteKeys",
+        JSON.stringify(usedKeys)
+    );
+
+
+    message.textContent =
+        "Account created successfully!";
+
+
+    /* Limpa campos */
+
+    document.getElementById("signupUsername").value = "";
+    document.getElementById("signupPassword").value = "";
+    document.getElementById("inviteKey").value = "";
+}
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+function login() {
+
+    const username =
+        document.getElementById("loginUsername").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+
+    const users =
+        JSON.parse(localStorage.getItem("users") || "[]");
+
+
+    const user =
+        users.find(
+            user =>
+            user.username.toLowerCase() === username.toLowerCase()
+            &&
+            user.password === password
+        );
+
+
+    if (!user) {
+
+        message.textContent =
+            "Invalid username or password.";
+
+        return;
+    }
+
+
+    message.textContent =
+        "Login successful! Welcome " + user.username + "!";
+}
+
+</script>
+
+</body>
+</html>
+```
+
