@@ -7,4 +7,3 @@ in development coming soon
   Discord
 </a>
 
-
