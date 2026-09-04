@@ -7,4 +7,4 @@ in development coming soon
   Discord
 </a>
 
-[login](https://blocksoheredev1.github.io/awesome-bricks/signup.html)
+<a href="" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-family: sans-serif; font-weight: bold;">Login</a>
