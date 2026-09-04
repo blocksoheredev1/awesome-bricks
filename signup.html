@@ -1,147 +1,249 @@
-```html
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Bricks - Login</title>
 
-<style>
-    * {
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background: #e00000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #000;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .box {
-        width: 360px;
-        background: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    }
+        .container {
+            width: 380px;
+            max-width: 90%;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+        }
 
-    h1 {
-        text-align: center;
-        margin-top: 0;
-    }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
 
-    label {
-        display: block;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #aaa;
-        border-radius: 4px;
-        font-size: 15px;
-    }
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            color: #ddd;
+        }
 
-    button {
-        width: 100%;
-        padding: 12px;
-        margin-top: 18px;
-        border: 0;
-        border-radius: 4px;
-        background: #111;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-    }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            background: #050505;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 5px;
+            outline: none;
+            font-size: 15px;
+        }
 
-    button:hover {
-        background: #333;
-    }
+        input:focus {
+            border-color: white;
+        }
 
-    .switch {
-        background: white;
-        color: #111;
-        border: 1px solid #111;
-        margin-top: 10px;
-    }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    .message {
-        text-align: center;
-        margin-top: 15px;
-        font-weight: bold;
-    }
+        button:hover {
+            background: #ddd;
+        }
 
-    .hidden {
-        display: none;
-    }
+        .secondary {
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+            margin-top: 10px;
+        }
 
-    .small {
-        font-size: 12px;
-        color: #555;
-        margin-top: 5px;
-    }
-</style>
+        .secondary:hover {
+            background: #333;
+        }
+
+        .message {
+            min-height: 20px;
+            margin: 12px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .info {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .logged-in {
+            text-align: center;
+        }
+
+        .logged-in p {
+            color: #ccc;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
+
+    <h1>Awesome Bricks</h1>
 
     <!-- LOGIN -->
-    <div id="login">
-        <h1>Login</h1>
+    <div id="loginPage">
 
-        <label>Username</label>
-        <input id="loginUsername" type="text" maxlength="20">
+        <h2>Login</h2>
 
-        <label>Password</label>
-        <input id="loginPassword" type="password">
+        <label for="loginUsername">Username</label>
+        <input
+            type="text"
+            id="loginUsername"
+            maxlength="20"
+            autocomplete="username"
+            placeholder="Username"
+        >
 
-        <button onclick="login()">Login</button>
-
-        <button class="switch" onclick="showSignup()">
-            Create account
-        </button>
+        <label for="loginPassword">Password</label>
+        <input
+            type="password"
+            id="loginPassword"
+            autocomplete="current-password"
+            placeholder="Password"
+        >
 
         <div id="loginMessage" class="message"></div>
+
+        <button onclick="login()">
+            Login
+        </button>
+
+        <button class="secondary" onclick="showSignup()">
+            Create Account
+        </button>
+
     </div>
 
 
     <!-- SIGNUP -->
-    <div id="signup" class="hidden">
-        <h1>Sign Up</h1>
+    <div id="signupPage" class="hidden">
 
-        <label>Username</label>
-        <input id="signupUsername" type="text" maxlength="20">
+        <h2>Create Account</h2>
 
-        <div class="small">
-            3-20 characters: letters, numbers and _
-        </div>
+        <label for="signupUsername">Username</label>
+        <input
+            type="text"
+            id="signupUsername"
+            maxlength="20"
+            autocomplete="username"
+            placeholder="3-20 characters"
+        >
 
-        <label>Password</label>
-        <input id="signupPassword" type="password">
+        <label for="signupPassword">Password</label>
+        <input
+            type="password"
+            id="signupPassword"
+            autocomplete="new-password"
+            placeholder="Minimum 8 characters"
+        >
 
-        <div class="small">
-            Minimum 8 characters
-        </div>
+        <label for="signupEmail">
+            Email (optional)
+        </label>
 
-        <label>Invite Key</label>
-        <input id="inviteKey" type="text">
+        <input
+            type="email"
+            id="signupEmail"
+            autocomplete="email"
+            placeholder="Email (optional)"
+        >
 
-        <button onclick="signup()">Create Account</button>
+        <label for="inviteKey">
+            Invite Key
+        </label>
 
-        <button class="switch" onclick="showLogin()">
+        <input
+            type="text"
+            id="inviteKey"
+            placeholder="Enter invite key"
+        >
+
+        <div id="signupMessage" class="message"></div>
+
+        <button onclick="signup()">
+            Create Account
+        </button>
+
+        <button class="secondary" onclick="showLogin()">
             Back to Login
         </button>
 
-        <div id="signupMessage" class="message"></div>
+        <div class="info">
+            Username: 3-20 characters<br>
+            Letters, numbers and _ only<br>
+            Password: minimum 8 characters
+        </div>
+
+    </div>
+
+
+    <!-- LOGGED IN -->
+    <div id="loggedPage" class="hidden logged-in">
+
+        <h2>Welcome!</h2>
+
+        <p>
+            You are logged in as:
+        </p>
+
+        <strong id="currentUsername"></strong>
+
+        <button onclick="goToMain()">
+            Continue
+        </button>
+
+        <button class="secondary" onclick="logout()">
+            Logout
+        </button>
+
     </div>
 
 </div>
@@ -149,248 +251,522 @@
 
 <script>
 
-/* =====================================================
-   INVITE KEYS
-   ===================================================== */
-
-const inviteKeys = [
-    "BRICK-7K2M-X9Q4",
-    "BRICK-P4N8-W3T6",
-    "BRICK-H7V2-K5R9",
-    "BRICK-Q8L4-M2Z7",
-    "BRICK-X5C9-T7P3",
-    "BRICK-N2F6-Y8K4",
-    "BRICK-R9W3-B6H2",
-    "BRICK-M7Q5-V2L8",
-    "BRICK-T4K9-C7N2",
-    "BRICK-Z6P3-H8M5",
-    "BRICK-K2R7-X4V9",
-    "BRICK-Y5N8-Q3L6",
-    "BRICK-V8M2-T6K4",
-    "BRICK-C4H7-P9W3",
-    "BRICK-L6X2-R8N5",
-    "BRICK-W3T9-K7M4",
-    "BRICK-F8Q5-Y2C6",
-    "BRICK-P7V4-H3L9",
-    "BRICK-N9K2-W6R5",
-    "BRICK-B5M8-X3T7",
-    "BRICK-Q2L6-K9V4",
-    "BRICK-H4R8-P7N3",
-    "BRICK-X9T5-C2M6",
-    "BRICK-M3W7-Y8K2",
-    "BRICK-V6N4-Q5R9",
-    "BRICK-K8P2-L7H5",
-    "BRICK-T9C4-X6M3",
-    "BRICK-R5Y8-W2N7",
-    "BRICK-F3K9-V4Q6",
-    "BRICK-Z7M5-H2T8",
-    "BRICK-N4X8-P6R2",
-    "BRICK-W9L3-K5C7",
-    "BRICK-Q6V2-M8Y4",
-    "BRICK-H5T7-R3N9",
-    "BRICK-X2K6-P8W4",
-    "BRICK-M9C5-V7L2",
-    "BRICK-Y3R8-Q4N6",
-    "BRICK-V5H2-T9K7",
-    "BRICK-C8P4-X3M6",
-    "BRICK-L2W7-R9Y5",
-    "BRICK-K4N8-Q6T3",
-    "BRICK-T7M2-H5V9",
-    "BRICK-R8X4-P3L6",
-    "BRICK-F6Y9-W2K5",
-    "BRICK-Z3C7-M8N4",
-    "BRICK-N7Q5-X2R8",
-    "BRICK-W4H9-K6P3",
-    "BRICK-Q9L2-V5T7",
-    "BRICK-H8M4-R6C2",
-    "BRICK-X5P7-Y3N9"
-];
+    /*
+    ============================================================
+    AWESOME BRICKS AUTH SYSTEM
+    ============================================================
+    Accounts are stored locally in the browser.
+    ============================================================
+    */
 
 
-/* =====================================================
-   PÁGINAS
-   ===================================================== */
-
-function showSignup() {
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("signup").classList.remove("hidden");
-    clearMessages();
-}
-
-function showLogin() {
-    document.getElementById("signup").classList.add("hidden");
-    document.getElementById("login").classList.remove("hidden");
-    clearMessages();
-}
-
-function clearMessages() {
-    document.getElementById("loginMessage").textContent = "";
-    document.getElementById("signupMessage").textContent = "";
-}
+    // Main page
+    const MAIN_PAGE =
+        "https://blocksoheredev1.github.io/awesome-bricks/";
 
 
-/* =====================================================
-   SIGNUP
-   ===================================================== */
+    // ----------------------------------------------------------
+    // Storage
+    // ----------------------------------------------------------
 
-function signup() {
-
-    const username =
-        document.getElementById("signupUsername").value.trim();
-
-    const password =
-        document.getElementById("signupPassword").value;
-
-    const key =
-        document.getElementById("inviteKey").value.trim().toUpperCase();
-
-    const message =
-        document.getElementById("signupMessage");
+    const ACCOUNT_STORAGE = "awesomeBricksAccounts";
+    const USED_KEYS_STORAGE = "awesomeBricksUsedKeys";
+    const SESSION_STORAGE = "awesomeBricksLoggedUser";
 
 
-    /* Username */
+    // ----------------------------------------------------------
+    // Get saved accounts
+    // ----------------------------------------------------------
 
-    const usernameRegex = /^[A-Za-z0-9_]{3,20}$/;
+    function getAccounts() {
 
-    if (!usernameRegex.test(username)) {
-        message.textContent =
-            "Invalid username.";
+        try {
 
-        return;
+            return JSON.parse(
+                localStorage.getItem(ACCOUNT_STORAGE)
+            ) || {};
+
+        } catch {
+
+            return {};
+
+        }
+
     }
 
 
-    /* Password */
+    // ----------------------------------------------------------
+    // Save accounts
+    // ----------------------------------------------------------
 
-    if (password.length < 8) {
-        message.textContent =
-            "Password must have at least 8 characters.";
+    function saveAccounts(accounts) {
 
-        return;
-    }
-
-
-    /* Invite key */
-
-    if (!inviteKeys.includes(key)) {
-        message.textContent =
-            "Invalid invite key.";
-
-        return;
-    }
-
-
-    /* Verifica se a key já foi usada */
-
-    const usedKeys =
-        JSON.parse(localStorage.getItem("usedInviteKeys") || "[]");
-
-    if (usedKeys.includes(key)) {
-        message.textContent =
-            "This invite key has already been used.";
-
-        return;
-    }
-
-
-    /* Verifica username existente */
-
-    const users =
-        JSON.parse(localStorage.getItem("users") || "[]");
-
-    const usernameExists =
-        users.some(user =>
-            user.username.toLowerCase() === username.toLowerCase()
+        localStorage.setItem(
+            ACCOUNT_STORAGE,
+            JSON.stringify(accounts)
         );
 
-    if (usernameExists) {
-        message.textContent =
-            "Username already exists.";
-
-        return;
     }
 
 
-    /* Cria conta */
+    // ----------------------------------------------------------
+    // Get used invite keys
+    // ----------------------------------------------------------
 
-    users.push({
-        username: username,
-        password: password
-    });
+    function getUsedKeys() {
 
-    localStorage.setItem(
-        "users",
-        JSON.stringify(users)
-    );
+        try {
 
+            return JSON.parse(
+                localStorage.getItem(USED_KEYS_STORAGE)
+            ) || [];
 
-    /* Marca invite key como usada */
+        } catch {
 
-    usedKeys.push(key);
+            return [];
 
-    localStorage.setItem(
-        "usedInviteKeys",
-        JSON.stringify(usedKeys)
-    );
+        }
+
+    }
 
 
-    message.textContent =
-        "Account created successfully!";
+    // ----------------------------------------------------------
+    // Save used invite keys
+    // ----------------------------------------------------------
+
+    function saveUsedKeys(keys) {
+
+        localStorage.setItem(
+            USED_KEYS_STORAGE,
+            JSON.stringify(keys)
+        );
+
+    }
 
 
-    /* Limpa campos */
+    // ----------------------------------------------------------
+    // Show Login
+    // ----------------------------------------------------------
 
-    document.getElementById("signupUsername").value = "";
-    document.getElementById("signupPassword").value = "";
-    document.getElementById("inviteKey").value = "";
-}
+    function showLogin() {
 
+        document
+            .getElementById("loginPage")
+            .classList.remove("hidden");
 
-/* =====================================================
-   LOGIN
-   ===================================================== */
+        document
+            .getElementById("signupPage")
+            .classList.add("hidden");
 
-function login() {
+        document
+            .getElementById("loggedPage")
+            .classList.add("hidden");
 
-    const username =
-        document.getElementById("loginUsername").value.trim();
+        document.getElementById("loginMessage").textContent = "";
 
-    const password =
-        document.getElementById("loginPassword").value;
-
-    const message =
-        document.getElementById("loginMessage");
-
-
-    const users =
-        JSON.parse(localStorage.getItem("users") || "[]");
+    }
 
 
-    const user =
-        users.find(
-            user =>
-            user.username.toLowerCase() === username.toLowerCase()
-            &&
-            user.password === password
+    // ----------------------------------------------------------
+    // Show Signup
+    // ----------------------------------------------------------
+
+    function showSignup() {
+
+        document
+            .getElementById("loginPage")
+            .classList.add("hidden");
+
+        document
+            .getElementById("signupPage")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("loggedPage")
+            .classList.add("hidden");
+
+        document.getElementById("signupMessage").textContent = "";
+
+    }
+
+
+    // ----------------------------------------------------------
+    // Username validation
+    // ----------------------------------------------------------
+
+    function validUsername(username) {
+
+        /*
+        3-20 characters
+        Only letters, numbers and _
+        */
+
+        return /^[A-Za-z0-9_]{3,20}$/.test(username);
+
+    }
+
+
+    // ----------------------------------------------------------
+    // Signup
+    // ----------------------------------------------------------
+
+    function signup() {
+
+        const username =
+            document
+                .getElementById("signupUsername")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("signupPassword")
+                .value;
+
+        const email =
+            document
+                .getElementById("signupEmail")
+                .value
+                .trim();
+
+        const inviteKey =
+            document
+                .getElementById("inviteKey")
+                .value
+                .trim()
+                .toUpperCase();
+
+
+        const message =
+            document.getElementById("signupMessage");
+
+
+        // Username
+        if (!validUsername(username)) {
+
+            message.textContent =
+                "Username must be 3-20 characters and use only letters, numbers and _.";
+
+            return;
+        }
+
+
+        // Password
+        if (password.length < 8) {
+
+            message.textContent =
+                "Password must contain at least 8 characters.";
+
+            return;
+        }
+
+
+        // Email is optional
+        if (
+            email !== "" &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        ) {
+
+            message.textContent =
+                "Please enter a valid email.";
+
+            return;
+        }
+
+
+        // Invite key
+        if (inviteKey === "") {
+
+            message.textContent =
+                "Please enter an invite key.";
+
+            return;
+        }
+
+
+        // Check invite key
+        if (!INVITE_KEYS.includes(inviteKey)) {
+
+            message.textContent =
+                "Invalid invite key.";
+
+            return;
+        }
+
+
+        // Check if key was already used
+        const usedKeys = getUsedKeys();
+
+        if (usedKeys.includes(inviteKey)) {
+
+            message.textContent =
+                "This invite key has already been used.";
+
+            return;
+        }
+
+
+        // Get accounts
+        const accounts = getAccounts();
+
+
+        // Username already exists
+        if (
+            Object.keys(accounts)
+                .some(
+                    name =>
+                        name.toLowerCase() ===
+                        username.toLowerCase()
+                )
+        ) {
+
+            message.textContent =
+                "This username is already taken.";
+
+            return;
+        }
+
+
+        // Create account
+        accounts[username] = {
+
+            username: username,
+
+            password: password,
+
+            email: email,
+
+            createdAt: new Date().toISOString()
+
+        };
+
+
+        saveAccounts(accounts);
+
+
+        // Mark invite key as used
+        usedKeys.push(inviteKey);
+
+        saveUsedKeys(usedKeys);
+
+
+        // Login automatically
+        localStorage.setItem(
+            SESSION_STORAGE,
+            username
         );
 
 
-    if (!user) {
+        // Go to main page
+        goToMain();
 
-        message.textContent =
-            "Invalid username or password.";
-
-        return;
     }
 
 
-    message.textContent =
-        "Login successful! Welcome " + user.username + "!";
-}
+    // ----------------------------------------------------------
+    // Login
+    // ----------------------------------------------------------
+
+    function login() {
+
+        const username =
+            document
+                .getElementById("loginUsername")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+
+        const message =
+            document.getElementById("loginMessage");
+
+
+        const accounts = getAccounts();
+
+
+        // Find username ignoring uppercase/lowercase
+        const realUsername =
+            Object.keys(accounts).find(
+                name =>
+                    name.toLowerCase() ===
+                    username.toLowerCase()
+            );
+
+
+        if (!realUsername) {
+
+            message.textContent =
+                "Username or password is incorrect.";
+
+            return;
+
+        }
+
+
+        if (
+            accounts[realUsername].password !==
+            password
+        ) {
+
+            message.textContent =
+                "Username or password is incorrect.";
+
+            return;
+
+        }
+
+
+        // Save session
+        localStorage.setItem(
+            SESSION_STORAGE,
+            realUsername
+        );
+
+
+        // Redirect
+        goToMain();
+
+    }
+
+
+    // ----------------------------------------------------------
+    // Go to Main Page
+    // ----------------------------------------------------------
+
+    function goToMain() {
+
+        window.location.href = MAIN_PAGE;
+
+    }
+
+
+    // ----------------------------------------------------------
+    // Logout
+    // ----------------------------------------------------------
+
+    function logout() {
+
+        localStorage.removeItem(
+            SESSION_STORAGE
+        );
+
+        showLogin();
+
+    }
+
+
+    // ----------------------------------------------------------
+    // Check session
+    // ----------------------------------------------------------
+
+    function checkSession() {
+
+        const loggedUser =
+            localStorage.getItem(
+                SESSION_STORAGE
+            );
+
+
+        if (loggedUser) {
+
+            document
+                .getElementById("loginPage")
+                .classList.add("hidden");
+
+            document
+                .getElementById("signupPage")
+                .classList.add("hidden");
+
+            document
+                .getElementById("loggedPage")
+                .classList.remove("hidden");
+
+            document
+                .getElementById("currentUsername")
+                .textContent = loggedUser;
+
+        }
+
+    }
+
+
+    // ==========================================================
+    // 50 INVITE KEYS
+    // ==========================================================
+    //
+    // PARA REMOVER O SISTEMA DE INVITE KEYS DEPOIS DOS TESTES:
+    //
+    // 1. Remova esta lista.
+    // 2. Remova a validação "Check invite key".
+    // 3. Remova a parte que adiciona a key em usedKeys.
+    //
+    // ==========================================================
+
+    const INVITE_KEYS = [
+
+        "ABX7-KQ29-M4TZ",
+        "C8NP-4VXR-7L2Q",
+        "D6YW-9KPA-X3MF",
+        "E4RT-2NQZ-8VKC",
+        "F7LM-5XDP-3QWA",
+        "G9BK-2RHT-6NXP",
+        "H3QV-8MZA-5KLR",
+        "J6XD-4PWN-9BTF",
+        "K8RM-7CVA-2XQH",
+        "L5TZ-3NFK-8WDP",
+        "M9QP-6XBR-4KVA",
+        "N2WK-8LDM-5QXF",
+        "P7VA-4ZKC-9RNT",
+        "Q3XF-6MBW-8KPL",
+        "R9DN-2QTA-7VKC",
+        "S4KP-8XLM-3NQW",
+        "T6WB-5RZF-9KDX",
+        "V8MC-3QPA-6LNT",
+        "W2QK-7XDR-4MVP",
+        "X5NL-9KTB-3QWA",
+        "Y7RP-4MZX-8KDC",
+        "Z3KF-6QVN-9LTA",
+        "A8DX-2WKM-5RQP",
+        "B4QT-7NVC-3XLA",
+        "C9WM-5KDR-8QTP",
+        "D2LP-9XVA-4KMC",
+        "E7QN-3RZT-6WKP",
+        "F5KC-8MVD-2QXR",
+        "G3TA-6XNP-9LKW",
+        "H9RV-4QMC-7ZDP",
+        "J2WX-8KLT-5NQA",
+        "K7DP-3MZR-9VXC",
+        "L4QN-6XKB-2WTP",
+        "M8ZT-5RDP-7KXA",
+        "N6KC-9QWV-3LRT",
+        "P3XM-7KQA-8VND",
+        "Q8LR-4WTP-6KZX",
+        "R5VA-2NQK-9XMD",
+        "S7KD-8MPC-4QWT",
+        "T4XN-6RZK-3VLP",
+        "V9QP-5KDM-7XRA",
+        "W6LT-3QVK-8NDP",
+        "X2KR-9MTA-5QWC",
+        "Y8DP-4XNL-6KRV",
+        "Z5QM-7KXA-3NWT",
+        "A3VK-8RDP-5QNL",
+        "B9XT-2KWM-7QRC",
+        "C6NP-5VKA-9XTD",
+        "D8QW-3MKR-6LXP",
+        "E5ZR-7KVD-2QNA"
+
+    ];
+
+
+    // Check if someone is already logged in
+    checkSession();
 
 </script>
 
 </body>
 </html>
-```
 
